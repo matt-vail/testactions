@@ -43,5 +43,5 @@ jobs:
           echo "Test 2"
           ssh -i test -Nf -M -L ${{ secrets.DEV_DB_STRING }} -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -o "ProxyCommand aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-west-2" ec2-user@i-0fb9ba4840e9e4b36
           echo "Test 3"
-          netstat -tnpa | grep 'ESTABLISHED.*sshd'
+          telnet localhost:4448
           echo "Test 4"
