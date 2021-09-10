@@ -38,6 +38,10 @@ jobs:
       - name: "Run Migrations"
         run: |
           ssh-keygen -t rsa -q -N "" -f test <<<y >/dev/null 2>&1
+          echo "Test 1"
           aws ec2-instance-connect send-ssh-public-key --instance-id i-0fb9ba4840e9e4b36 --availability-zone us-west-2a --instance-os-user ec2-user --ssh-public-key file://test.pub
+          echo "Test 2"
           ssh -i test -Nf -M -L ${{ secrets.DEV_DB_STRING }} -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -o "ProxyCommand aws ssm start-session --target %h --document AWS-StartSSHSession --parameters portNumber=%p --region=us-west-2" ec2-user@i-0fb9ba4840e9e4b36
+          echo "Test 3"
           netstat -tnpa | grep 'ESTABLISHED.*sshd'
+          echo "Test 4"
